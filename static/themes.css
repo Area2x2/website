@@ -1,0 +1,25 @@
+:root[data-theme="light"] {
+    --backdrop: var(--900);
+    --background: var(--800);
+    --background-off: var(--700);
+    --neutral: var(--600);
+    --text: var(--0);
+    --text-off: var(--300);
+    --accent: var(--accent-dark);
+    --danger: var(--danger-dark);
+    --success: var(--success-dark);
+    --warning: var(--warning-dark);
+}
+
+:root[data-theme="dark"] {
+    --backdrop: var(--0);
+    --background: var(--100);
+    --background-off: var(--200);
+    --neutral: var(--500);
+    --text: var(--900);
+    --text-off: var(--700);
+    --accent: var(--accent-light);
+    --danger: var(--danger-light);
+    --success: var(--success-light);
+    --warning: var(--warning-light);
+}

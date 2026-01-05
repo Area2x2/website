@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="%sveltekit.assets%/styles.css" />
+
+        <!--<script>
+            const favicon = document.getElementById("favicon");
+            const darkMode = window.matchMedia(
+                "(prefers-color-scheme: dark)",
+            ).matches;
+            favicon.href = darkMode
+                ? "%sveltekit.assets%/favicon-light.svg"
+                : "%sveltekit.assets%/favicon-dark.svg";
+
+            window
+                .matchMedia("(prefers-color-scheme: dark)")
+                .addEventListener("change", (e) => {
+                    favicon.href = e.matches
+                        ? "%sveltekit.assets%/favicon-light.svg"
+                        : "%sveltekit.assets%/favicon-dark.svg";
+                });
+        </script>-->
+
+        %sveltekit.head%
+    </head>
+    <body data-sveltekit-preload-data="hover">
+        <div style="display: contents">%sveltekit.body%</div>
+    </body>
+</html>
