@@ -23,7 +23,7 @@ export async function getGuest(id: string): Promise<table.Guest | undefined> {
     const guestResults = await db
         .select()
         .from(table.guest)
-        .where(eq(table.guest.user_id, existingUser.id));
+        .where(eq(table.guest.userId, existingUser.id));
     const existingGuest = guestResults.at(0);
     if (existingGuest) {
         return existingGuest;
@@ -31,4 +31,3 @@ export async function getGuest(id: string): Promise<table.Guest | undefined> {
 
     return undefined;
 }
-

@@ -9,10 +9,43 @@ import {
     validatePaymentMethod,
 } from "$lib/server/db/validation";
 import { makeDeposit } from "$lib/server/db/deposit";
+import type { PageServerLoad } from "./$types";
+import { getWorkers } from "$lib/server/db/worker";
+import { getEvents } from "$lib/server/db/event";
+import type { WorkerData } from "$lib/components/options/WorkerOption.svelte";
+import type { EventData } from "$lib/components/options/EventOption.svelte";
+
+export const load: PageServerLoad = async () => {
+    const workers = (await getWorkers()).map((v) => {
+        return {
+            id: v.user.id,
+            name: v.user.name,
+            nickname: v.user.nickname ?? undefined,
+            email: v.user.email,
+            role: v.worker.role,
+        } satisfies WorkerData;
+    });
+
+    const events = (await getEvents()).map((v) => {
+        return {
+            id: v.id,
+            name: v.name,
+            date: v.date.toDateString(),
+        } satisfies EventData;
+    });
+
+    return {
+        workers,
+        events,
+    };
+};
 
 export const actions = {
     insertGuest: async ({ request }) => {
         const formData = await request.formData();
+        const formDataObject = Object.fromEntries(
+            formData.entries().map(([k, v]) => [k, v.toString()]),
+        );
 
         const email = formData.get("email");
         const name = formData.get("name");
@@ -23,69 +56,72 @@ export const actions = {
         const eventId = formData.get("eventId");
         const workerId = formData.get("workerId");
 
+        let errorMessages: Map<string, string> = new Map();
+
         if (!validateEmail(email)) {
-            return fail(400, {
-                message: "Invalid email",
-            });
+            errorMessages.set("email", "Invalid email");
         }
 
         if (!validateName(name)) {
-            return fail(400, {
-                message:
-                    "Invalid name (min 3, max 31 characters, alphanumeric only)",
-            });
+            errorMessages.set("name", "Invalid name");
         }
 
         if (!validateAge(age)) {
-            return fail(400, {
-                message: "Invalid age (underage or over 100 years old)",
-            });
+            errorMessages.set("age", "Invalid age");
         }
 
         if (!validateNickname(nickname)) {
-            return fail(400, {
-                message:
-                    "Invalid nickname (min 3, max 31 characters, alphanumeric only)",
-            });
+            errorMessages.set("nickname", "Invalid nickname");
         }
 
         if (!validateMonetaryValue(amount)) {
-            return fail(400, {
-                message: "Invalid monetary value",
-            });
+            errorMessages.set("amount", "Invalid amount");
         }
 
         if (!validatePaymentMethod(paymentMethod)) {
-            return fail(400, {
-                message: "Invalid payment method",
-            });
+            errorMessages.set("paymentMethod", "Invalid paymentMethod");
         }
 
         if (!validateId(eventId)) {
-            return fail(400, {
-                message: "Invalid event id",
-            });
+            errorMessages.set("eventId", "Invalid eventId");
         }
 
         if (!validateId(workerId)) {
+            errorMessages.set("workerId", "Invalid workerId");
+        }
+
+        if (errorMessages.size !== 0) {
+            console.log(formDataObject, errorMessages);
             return fail(400, {
-                message: "Invalid worker id",
+                formData: formDataObject,
+                errorMessages,
             });
         }
 
         try {
             await makeDeposit(
+                //@ts-ignore
                 name,
+                //@ts-ignore
                 email,
+                //@ts-ignore
                 age,
+                //@ts-ignore
                 nickname,
+                //@ts-ignore
                 amount,
+                //@ts-ignore
                 paymentMethod,
+                //@ts-ignore
                 eventId,
+                //@ts-ignore
                 workerId,
             );
         } catch (e: any) {
-            return fail(500, { message: e.message });
+            return fail(500, {
+                formData: formDataObject,
+                message: "Server Error",
+            });
         }
 
         return { success: true };

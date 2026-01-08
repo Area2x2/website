@@ -33,7 +33,7 @@ export async function getUserType(
     const guestResults = await db
         .select()
         .from(table.guest)
-        .where(eq(table.guest.user_id, existingUser.id));
+        .where(eq(table.guest.userId, existingUser.id));
     if (guestResults.length > 0) {
         return "guest";
     }
@@ -41,7 +41,7 @@ export async function getUserType(
     const workerResults = await db
         .select()
         .from(table.worker)
-        .where(eq(table.worker.user_id, existingUser.id));
+        .where(eq(table.worker.userId, existingUser.id));
     if (workerResults.length > 0) {
         return "worker";
     }

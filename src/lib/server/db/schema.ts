@@ -18,7 +18,7 @@ export type User = typeof user.$inferSelect;
 export type UserType = "guest" | "worker";
 
 export const guest = pgTable("guest", {
-    user_id: text("user_id")
+    userId: text("user_id")
         .notNull()
         .references(() => user.id),
     age: integer("age").notNull(),
@@ -91,7 +91,7 @@ export const event = pgTable("event", {
     name: text("name").notNull(),
     location: text("location"),
     time: time("time", { withTimezone: true }),
-    date: timestamp("date"),
+    date: timestamp("date").notNull(),
 });
 export type Event = typeof event.$inferSelect;
 
@@ -107,7 +107,7 @@ export const eventGuestItem = pgTable("event_guest_item", {
 export type EventGuestItem = typeof eventGuestItem.$inferSelect;
 
 export const worker = pgTable("worker", {
-    user_id: text("user_id")
+    userId: text("user_id")
         .notNull()
         .references(() => user.id),
     role: text("role", { enum: ["camarero", "dj", "jefe"] }).notNull(),

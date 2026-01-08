@@ -15,7 +15,7 @@ export async function makeDeposit(
 ): Promise<{ guestId: string; code: string }> {
     const userId = generateId();
     await db.insert(table.user).values({ id: userId, name, email, nickname });
-    await db.insert(table.guest).values({ user_id: userId, age });
+    await db.insert(table.guest).values({ userId: userId, age });
 
     const workerData = await getWorker(workerId);
     if (!workerData) {

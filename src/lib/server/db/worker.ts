@@ -25,7 +25,7 @@ export async function getWorker(id: string): Promise<table.Worker | undefined> {
     const workerResults = await db
         .select()
         .from(table.worker)
-        .where(eq(table.worker.user_id, existingUser.id));
+        .where(eq(table.worker.userId, existingUser.id));
     const existingWorker = workerResults.at(0);
     if (existingWorker) {
         return existingWorker;
@@ -62,10 +62,17 @@ export async function registerWorker(
 
         await db
             .insert(table.worker)
-            .values({ user_id: userId, role, wallet: "0.0", code: codeHash });
+            .values({ userId: userId, role, wallet: "0.0", code: codeHash });
     } catch {
         throw new Error("An error has occurred");
     }
+}
 
-    return { success: true };
+export async function getWorkers() {
+    const results = await db
+        .select()
+        .from(table.worker)
+        .innerJoin(table.user, eq(table.worker.userId, table.user.id));
+
+    return results;
 }

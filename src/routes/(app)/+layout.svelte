@@ -6,10 +6,8 @@
     let { data, children }: { data: PageData; children: Snippet } = $props();
 </script>
 
-<!-- <svelte:head>
-    <link rel="icon" href={favicon} />
-</svelte:head> -->
-
 <Navbar user={data.user} />
 
-{@render children()}
+<div class="app column">
+    {@render children()}
+</div>

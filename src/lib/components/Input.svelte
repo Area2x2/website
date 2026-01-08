@@ -5,40 +5,44 @@
     let {
         name,
         label,
+        required,
         value = $bindable(),
         placeholder,
         type = "text",
-        width = "auto",
         pattern = undefined,
         error,
     }: {
         name?: string;
         label?: string;
+        required?: boolean;
         value?: string;
         placeholder?: string;
         type?: string;
-        width?: string;
         error?: string;
         pattern?: string;
     } = $props();
 </script>
 
-<div class="input column" style:width>
-    {#if label}
-        <!-- svelte-ignore a11y_label_has_associated_control -->
-        <label class="tag" class:has-content={value && value !== ""}>
-            {label}
-        </label>
-    {/if}
+<div class="input column">
+    <div class="wrapper column">
+        {#if label}
+            <!-- svelte-ignore a11y_label_has_associated_control -->
+            <label class="tag" class:has-value={value && value !== ""}>
+                {label}
+            </label>
+        {/if}
 
-    <input
-        {name}
-        class:has-content={value && value !== ""}
-        bind:value
-        {type}
-        {placeholder}
-        {pattern}
-    />
+        <input
+            {required}
+            {name}
+            class:has-value={value && value !== ""}
+            class:has-error={error && error !== ""}
+            bind:value
+            {type}
+            {placeholder}
+            {pattern}
+        />
+    </div>
 
     {#if error}
         <p
@@ -52,32 +56,9 @@
 
 <style>
     .input {
+        position: relative;
         min-width: 18.75rem;
-    }
-    .column {
-        gap: 0.25rem;
-    }
-
-    input {
-        background: unset;
-        font-size: 1rem;
-        cursor: pointer;
-        border: none;
-        color: var(--text);
-        font-family: "Barlow", sans-serif;
-        align-items: center;
-
-        width: 100%;
-        border: 2px solid var(--background-off);
-        border-radius: 0.5rem;
-        height: 2.5rem;
-        padding: 0.25rem 1rem;
-        font-weight: 500;
-        cursor: text;
-
-        &.has-content {
-            font-weight: semibold;
-        }
+        gap: 0;
     }
 
     label {
@@ -85,11 +66,57 @@
         color: var(--neutral);
     }
 
+    .wrapper {
+        gap: 0.25rem;
+    }
+
+    input {
+        width: 100%;
+        border-radius: 0.25rem;
+        height: 2.5rem;
+        font-weight: 500;
+        cursor: text;
+        padding: calc(0.25rem - 0.125rem) calc(1rem - 0.125rem);
+        border: 0.125rem solid var(--background-off);
+        background-color: var(--background);
+        color: var(--neutral);
+        transition: all 100ms ease-out;
+
+        &::placeholder {
+            color: var(--neutral);
+            transition: all 200ms ease-out;
+        }
+
+        &:hover {
+            color: var(--text-off);
+            background-color: oklch(from var(--background-off) l c h / 0.5);
+
+            &::placeholder {
+                color: var(--text-off);
+            }
+        }
+
+        &.has-value {
+            color: var(--text);
+            background-color: var(--background-off);
+        }
+
+        &.has-error {
+            border-radius: 0.25rem 0.25rem 0 0;
+        }
+
+        &:focus {
+            outline: none;
+            border: 0.125rem solid var(--accent);
+        }
+    }
+
     .error {
-        height: 1.5rem;
-        display: grid;
-        place-items: center;
+        width: 100%;
         color: var(--background);
         background-color: var(--danger);
+        justify-content: start;
+        padding: 0.25rem 1rem;
+        border-radius: 0 0 0.25rem 0.25rem;
     }
 </style>
