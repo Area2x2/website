@@ -19,22 +19,22 @@
     <Logo width="1.5rem" color="var(--accent)" />
 
     <div class="nav-group column">
-        <Button href="/dashboard" cta="ghost" iconLeft iconRight>
+        <Button href="/admin/dashboard" cta="ghost" iconLeft iconRight>
             <Icon icon={IconType.Home} />
         </Button>
-        <Button href="/inventory" cta="ghost" iconLeft iconRight>
+        <Button href="/admin/inventory" cta="ghost" iconLeft iconRight>
             <Icon icon={IconType.Database} />
         </Button>
-        <Button href="/wallet" cta="ghost" iconLeft iconRight>
+        <Button href="/admin/wallet" cta="ghost" iconLeft iconRight>
             <Icon icon={IconType.Wallet} />
         </Button>
-        <Button href="/calendar" cta="ghost" iconLeft iconRight>
+        <Button href="/admin/calendar" cta="ghost" iconLeft iconRight>
             <Icon icon={IconType.Calendar} />
         </Button>
-        <Button href="/workers" cta="ghost" iconLeft iconRight>
+        <Button href="/admin/workers" cta="ghost" iconLeft iconRight>
             <Icon icon={IconType.Users} />
         </Button>
-        <Button href="/map" cta="ghost" iconLeft iconRight>
+        <Button href="/admin/map" cta="ghost" iconLeft iconRight>
             <Icon icon={IconType.Map} />
         </Button>
     </div>

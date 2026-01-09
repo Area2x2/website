@@ -100,7 +100,7 @@ export const actions = {
         }
 
         try {
-            const { code, guestId } = await makeDeposit(
+            await makeDeposit(
                 //@ts-ignore
                 name,
                 //@ts-ignore
@@ -118,7 +118,6 @@ export const actions = {
                 //@ts-ignore
                 workerId,
             );
-            console.log(guestId, code);
         } catch (e: any) {
             return fail(500, {
                 formData: formDataObject,
