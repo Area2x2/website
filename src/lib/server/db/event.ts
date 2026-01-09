@@ -55,6 +55,7 @@ export function generateEventGuestCode() {
     for (const byte of bytes) {
         str += ALLOWED_CODE_CHARACTERS[byte % ALLOWED_CODE_CHARACTERS.length];
     }
+    return str;
 }
 
 export async function getEvents() {
