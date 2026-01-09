@@ -48,10 +48,13 @@ export async function getEventFromName(
     return undefined;
 }
 
+const ALLOWED_CODE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 export function generateEventGuestCode() {
-    const bytes = crypto.getRandomValues(new Uint8Array(12));
-    const id = encodeBase32LowerCase(bytes);
-    return id;
+    let str = "";
+    let bytes = crypto.getRandomValues(new Uint8Array(12));
+    for (const byte of bytes) {
+        str += ALLOWED_CODE_CHARACTERS[byte % ALLOWED_CODE_CHARACTERS.length];
+    }
 }
 
 export async function getEvents() {

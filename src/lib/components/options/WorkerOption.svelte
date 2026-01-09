@@ -5,11 +5,12 @@
         nickname?: string;
         email: string;
         role: string;
+        wallet: string;
     };
 </script>
 
 <script lang="ts">
-    import Tag from "../Tag.svelte";
+    import Tag from "../tag/Tag.svelte";
 
     let { worker }: { worker: WorkerData } = $props();
 </script>

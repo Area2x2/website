@@ -4,10 +4,9 @@
     import Icon from "./icon/Icon.svelte";
     import { IconType } from "./icon/icon";
     import Logo from "./Logo.svelte";
-    import Tag from "./Tag.svelte";
+    import Tag from "./tag/Tag.svelte";
     import Dropdown from "./dropdown/Dropdown.svelte";
     import { DropdownState } from "./dropdown/dropdown.svelte";
-    import { flip, shift, offset } from "@floating-ui/dom";
 
     let {
         user,
@@ -35,7 +34,7 @@
                     {:else}
                         <Button
                             href="/admin"
-                            cta="secondary"
+                            cta="ghost"
                             rounded
                             iconLeft
                             iconRight
@@ -56,6 +55,9 @@
                             bind:self={state.anchor}
                         >
                             {user.name}
+                            {#if user.role}
+                                <Tag>{user.role}</Tag>
+                            {/if}
                         </Button>
                     {/snippet}
                 </Dropdown>
@@ -68,8 +70,12 @@
 
 {#snippet profileDropdownSnippet()}
     <div class="column profile-dropdown">
-        <Button href="/profile" cta="ghost">Profile</Button>
-        <Button href="/login" color="danger">Cerrar Sesión</Button>
+        <Button href="/profile" cta="ghost" align="start" iconLeft>
+            <Icon icon={IconType.User} /> Profile
+        </Button>
+        <Button href="/logout" color="red" align="start" iconLeft>
+            <Icon icon={IconType.Logout} fill="var(--backdropp)" /> Cerrar Sesión
+        </Button>
     </div>
 {/snippet}
 
@@ -82,7 +88,7 @@
         justify-content: space-between;
         align-items: center;
 
-        background-color: var(--background);
+        border-bottom: 0.125rem solid var(--background);
     }
 
     .row {

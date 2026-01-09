@@ -1,5 +1,5 @@
 {
-  "id": "f840ac13-ddd9-4ae9-bd22-d27dab4466aa",
+  "id": "70a952a8-6521-4219-a2d8-693c00f169df",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -11,12 +11,12 @@
         "guest_id": {
           "name": "guest_id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "amount": {
           "name": "amount",
-          "type": "numeric",
+          "type": "numeric(10, 2)",
           "primaryKey": false,
           "notNull": true
         },
@@ -29,7 +29,7 @@
         "event_id": {
           "name": "event_id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "worker_id": {
@@ -81,7 +81,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "deposit_guest_id_event_id_pk": {
+          "name": "deposit_guest_id_event_id_pk",
+          "columns": [
+            "guest_id",
+            "event_id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -95,6 +103,12 @@
           "name": "id",
           "type": "text",
           "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "location": {
@@ -113,7 +127,7 @@
           "name": "date",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -132,13 +146,13 @@
           "name": "guest_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "event_id": {
           "name": "event_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "code": {
           "name": "code",
@@ -176,7 +190,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "event_guest_item_guest_id_event_id_pk": {
+          "name": "event_guest_item_guest_id_event_id_pk",
+          "columns": [
+            "guest_id",
+            "event_id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -189,7 +211,7 @@
         "user_id": {
           "name": "user_id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "age": {
@@ -391,7 +413,7 @@
         "shop_id": {
           "name": "shop_id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "subproduct_id": {
@@ -545,7 +567,7 @@
         "user_id": {
           "name": "user_id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "role": {

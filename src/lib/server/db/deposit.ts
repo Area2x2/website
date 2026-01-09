@@ -36,6 +36,12 @@ export async function makeDeposit(
     });
     const code = generateEventGuestCode();
 
+    await db.insert(table.eventGuestItem).values({
+        guestId: userId,
+        eventId: eventId,
+        code,
+    });
+
     return {
         guestId: userId,
         code,

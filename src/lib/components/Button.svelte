@@ -12,6 +12,7 @@
         rounded,
         iconLeft,
         iconRight,
+        align = "center",
         self = $bindable(),
         ...props
     }: {
@@ -25,6 +26,7 @@
         rounded?: boolean;
         iconLeft?: boolean;
         iconRight?: boolean;
+        align?: "start" | "center" | "end";
         self?: HTMLElement;
     } = $props();
 </script>
@@ -40,6 +42,7 @@
         class:icon-left={iconLeft}
         class:icon-right={iconRight}
         style:width
+        style:justify-items={align}
         {...props}
     >
         {@render children()}
@@ -55,6 +58,7 @@
         class:icon-left={iconLeft}
         class:icon-right={iconRight}
         style:width
+        style:justify-items={align}
         {...props}
     >
         {@render children()}
@@ -70,40 +74,20 @@
         border: none;
         color: var(--text);
         font-family: "Barlow", sans-serif;
-        align-items: center;
+        align-items: base;
 
         letter-spacing: 1%;
         line-height: 160%;
 
-        justify-content: center;
-        min-width: 2.5rem;
-        height: 2.5rem;
+        min-width: 2rem;
+        height: 2rem;
         display: flex;
         flex-direction: row;
-        padding: 0.5rem 1rem;
-        font-weight: bold;
+        padding: 0.375rem 0.75rem;
         border-radius: 0.25rem;
         text-decoration: none;
         transition: all 200ms ease-out;
-
-        &.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            user-select: none;
-            cursor: not-allowed;
-        }
-
-        &.rounded {
-            border-radius: 2.25rem;
-        }
-
-        &.icon-left {
-            padding: 0.5rem;
-        }
-
-        &.icon-right {
-            padding: 0.5rem;
-        }
+        gap: 0.375rem;
 
         &.primary {
             background-color: var(--color);
@@ -128,13 +112,32 @@
         }
 
         &.ghost {
-            --icon-color: var(--background);
-            border: 0.125rem solid var(--background-off);
+            background-color: unset;
+            --icon-color: var(--neutral);
 
             &:hover {
                 background-color: var(--background-off);
                 --icon-color: var(--text);
             }
+        }
+
+        &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            user-select: none;
+            cursor: not-allowed;
+        }
+
+        &.rounded {
+            border-radius: 2.25rem;
+        }
+
+        &.icon-left {
+            padding-left: 0.375rem;
+        }
+
+        &.icon-right {
+            padding-right: 0.375rem;
         }
 
         &.icon {

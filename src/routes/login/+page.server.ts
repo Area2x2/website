@@ -49,31 +49,31 @@ export const actions: Actions = {
                     });
                 }
 
-                const eventGuestItem = await getEventIdFromUserId(
-                    guest.user_id,
-                );
+                const eventGuestItem = await getEventIdFromUserId(guest.userId);
                 if (!eventGuestItem) {
                     return fail(400, {
                         message: "Incorrect guest id or code",
                     });
                 }
 
-                const validPassword = await verify(
-                    code,
+                const validPassword = eventGuestItem.code === code;
+                console.log(
                     eventGuestItem.code,
-                    auth.ARGON2_OPTIONS,
+                    code,
+                    eventGuestItem.code === code,
                 );
                 if (!validPassword) {
                     return fail(400, {
                         message: "Incorrect guest id or code",
                     });
                 }
+                break;
             }
             case "worker": {
                 const worker = await getWorkerFromEmail(email);
                 if (!worker) {
                     return fail(400, {
-                        message: "Invalid guest",
+                        message: "Invalid worker",
                     });
                 }
 
@@ -84,9 +84,10 @@ export const actions: Actions = {
                 );
                 if (!validPassword) {
                     return fail(400, {
-                        message: "Incorrect guest id or code",
+                        message: "Incorrect worker id or code",
                     });
                 }
+                break;
             }
         }
 

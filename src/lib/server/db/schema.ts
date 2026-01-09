@@ -6,6 +6,7 @@ import {
     decimal,
     time,
     numeric,
+    primaryKey,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -19,6 +20,7 @@ export type UserType = "guest" | "worker";
 
 export const guest = pgTable("guest", {
     userId: text("user_id")
+        .primaryKey()
         .notNull()
         .references(() => user.id),
     age: integer("age").notNull(),
@@ -77,7 +79,7 @@ export type Shop = typeof shop.$inferSelect;
 
 export const shopItem = pgTable("shop_item", {
     shopId: text("shop_id")
-        .notNull()
+        .primaryKey()
         .references(() => shop.id),
     subproductId: text("subproduct_id")
         .notNull()
@@ -95,20 +97,24 @@ export const event = pgTable("event", {
 });
 export type Event = typeof event.$inferSelect;
 
-export const eventGuestItem = pgTable("event_guest_item", {
-    guestId: text("guest_id")
-        .notNull()
-        .references(() => user.id),
-    eventId: text("event_id")
-        .notNull()
-        .references(() => event.id),
-    code: text("code").notNull(),
-});
+export const eventGuestItem = pgTable(
+    "event_guest_item",
+    {
+        guestId: text("guest_id")
+            .notNull()
+            .references(() => user.id),
+        eventId: text("event_id")
+            .notNull()
+            .references(() => event.id),
+        code: text("code").notNull(),
+    },
+    (table) => [primaryKey({ columns: [table.guestId, table.eventId] })],
+);
 export type EventGuestItem = typeof eventGuestItem.$inferSelect;
 
 export const worker = pgTable("worker", {
     userId: text("user_id")
-        .notNull()
+        .primaryKey()
         .references(() => user.id),
     role: text("role", { enum: ["camarero", "dj", "jefe"] }).notNull(),
     wallet: decimal("wallet").notNull(),
@@ -117,17 +123,21 @@ export const worker = pgTable("worker", {
 export type Worker = typeof worker.$inferSelect;
 export type WorkerRole = typeof worker.$inferSelect.role;
 
-export const deposit = pgTable("deposit", {
-    guestId: text("guest_id")
-        .notNull()
-        .references(() => user.id),
-    amount: numeric("amount", { precision: 10, scale: 2 }).notNull(),
-    paymentMethod: text("payment_method", { enum: ["cash", "bizum"] }),
-    eventId: text("event_id")
-        .notNull()
-        .references(() => event.id),
-    workerId: text("worker_id")
-        .notNull()
-        .references(() => user.id),
-});
+export const deposit = pgTable(
+    "deposit",
+    {
+        guestId: text("guest_id")
+            .notNull()
+            .references(() => user.id),
+        amount: numeric("amount", { precision: 10, scale: 2 }).notNull(),
+        paymentMethod: text("payment_method", { enum: ["cash", "bizum"] }),
+        eventId: text("event_id")
+            .notNull()
+            .references(() => event.id),
+        workerId: text("worker_id")
+            .notNull()
+            .references(() => user.id),
+    },
+    (table) => [primaryKey({ columns: [table.guestId, table.eventId] })],
+);
 export type Deposit = typeof deposit.$inferSelect;

@@ -1,26 +1,29 @@
 CREATE TABLE "deposit" (
-	"guest_id" text NOT NULL,
-	"amount" numeric NOT NULL,
+	"guest_id" text PRIMARY KEY NOT NULL,
+	"amount" numeric(10, 2) NOT NULL,
 	"payment_method" text,
-	"event_id" text NOT NULL,
-	"worker_id" text NOT NULL
+	"event_id" text PRIMARY KEY NOT NULL,
+	"worker_id" text NOT NULL,
+	CONSTRAINT "deposit_guest_id_event_id_pk" PRIMARY KEY("guest_id","event_id")
 );
 --> statement-breakpoint
 CREATE TABLE "event" (
 	"id" text PRIMARY KEY NOT NULL,
+	"name" text NOT NULL,
 	"location" text,
 	"time" time with time zone,
-	"date" timestamp
+	"date" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "event_guest_item" (
-	"guest_id" text NOT NULL,
-	"event_id" text NOT NULL,
-	"code" text NOT NULL
+	"guest_id" text,
+	"event_id" text,
+	"code" text NOT NULL,
+	CONSTRAINT "event_guest_item_guest_id_event_id_pk" PRIMARY KEY("guest_id","event_id")
 );
 --> statement-breakpoint
 CREATE TABLE "guest" (
-	"user_id" text NOT NULL,
+	"user_id" text PRIMARY KEY NOT NULL,
 	"age" integer NOT NULL
 );
 --> statement-breakpoint
@@ -54,7 +57,7 @@ CREATE TABLE "shop" (
 );
 --> statement-breakpoint
 CREATE TABLE "shop_item" (
-	"shop_id" text NOT NULL,
+	"shop_id" text PRIMARY KEY NOT NULL,
 	"subproduct_id" text NOT NULL,
 	"price" numeric
 );
@@ -75,7 +78,7 @@ CREATE TABLE "user" (
 );
 --> statement-breakpoint
 CREATE TABLE "worker" (
-	"user_id" text NOT NULL,
+	"user_id" text PRIMARY KEY NOT NULL,
 	"role" text NOT NULL,
 	"wallet" numeric NOT NULL,
 	"code" text NOT NULL

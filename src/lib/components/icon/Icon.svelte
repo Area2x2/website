@@ -49,11 +49,11 @@
 
 <style>
     svg {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
     }
     path {
         transition: all 200ms ease-out;
-        stroke-width: 0.09375rem;
+        stroke-width: 0.125rem;
     }
 </style>

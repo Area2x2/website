@@ -1,12 +1,16 @@
-import type { Handle } from "@sveltejs/kit";
+import { error, type Handle } from "@sveltejs/kit";
 import * as auth from "$lib/server/auth";
 
-const handleAuth: Handle = async ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
     const sessionToken = event.cookies.get(auth.sessionCookieName);
 
     if (!sessionToken) {
         event.locals.user = null;
         event.locals.session = null;
+
+        if (event.url.pathname.includes("admin")) {
+            return error(403, "Forbidden");
+        }
 
         return resolve(event);
     }
@@ -19,10 +23,16 @@ const handleAuth: Handle = async ({ event, resolve }) => {
         auth.deleteSessionTokenCookie(event);
     }
 
+    if (event.url.pathname.includes("admin") && !isAdmin(user)) {
+        return error(403, "Forbidden access");
+    }
+
     event.locals.user = user;
     event.locals.session = session;
 
     return resolve(event);
 };
 
-export const handle: Handle = handleAuth;
+function isAdmin(user: auth.UserSessionData | null) {
+    return user !== null && user.role !== undefined;
+}

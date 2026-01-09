@@ -23,6 +23,7 @@ export const load: PageServerLoad = async () => {
             nickname: v.user.nickname ?? undefined,
             email: v.user.email,
             role: v.worker.role,
+            wallet: "-",
         } satisfies WorkerData;
     });
 
@@ -99,7 +100,7 @@ export const actions = {
         }
 
         try {
-            await makeDeposit(
+            const { code, guestId } = await makeDeposit(
                 //@ts-ignore
                 name,
                 //@ts-ignore
@@ -117,6 +118,7 @@ export const actions = {
                 //@ts-ignore
                 workerId,
             );
+            console.log(guestId, code);
         } catch (e: any) {
             return fail(500, {
                 formData: formDataObject,

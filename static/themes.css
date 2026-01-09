@@ -8,9 +8,9 @@
     --text-off: var(--300);
     --accent: var(--accent-dark);
     --accent-c: var(--accent-dark-c);
-    --danger: var(--danger-dark);
-    --success: var(--success-dark);
-    --warning: var(--warning-dark);
+    --red: var(--red-dark);
+    --green: var(--green-dark);
+    --yellow: var(--yellow-dark);
 
     /* https://www.joshwcomeau.com/shadow-palette/ */
     --shadow-color: oklch(0.667 0.0313 276.98);
@@ -27,9 +27,9 @@
         --text-off: var(--700);
         --accent: var(--accent-light);
         --accent-c: var(--accent-light-c);
-        --danger: var(--danger-light);
-        --success: var(--success-light);
-        --warning: var(--warning-light);
+        --red: var(--red-light);
+        --green: var(--green-light);
+        --yellow: var(--yellow-light);
 
         --shadow-color: oklch(16.4% 0.0065 271);
     }

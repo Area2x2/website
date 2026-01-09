@@ -6,6 +6,7 @@ export const load: PageServerLoad = async (event) => {
     if (!event.locals.session) {
         return redirect(302, "/");
     }
+
     await auth.invalidateSession(event.locals.session.id);
     auth.deleteSessionTokenCookie(event);
 
