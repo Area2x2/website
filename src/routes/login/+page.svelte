@@ -21,14 +21,12 @@
                 name="email"
                 label="Correo electrónico"
                 placeholder="Correo electrónico"
-                width="100%"
             />
             <Input
                 type="password"
                 name="code"
                 label="Código"
                 placeholder="Código"
-                width="100%"
             />
             {#if form}
                 <p style="color: red">{form.message}</p>

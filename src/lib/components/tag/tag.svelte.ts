@@ -1,5 +1,6 @@
 export enum TagCategory {
     Role,
+    Event,
 }
 
 export type TagColor = "yellow" | "red" | "green" | "accent" | "neutral";
@@ -17,5 +18,7 @@ export function getTagColor(
     switch (category) {
         case TagCategory.Role:
             return TAG_ROLE_COLORS[slug];
+        case TagCategory.Event:
+            return "red";
     }
 }

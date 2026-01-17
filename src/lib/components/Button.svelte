@@ -42,7 +42,7 @@
         class:icon-left={iconLeft}
         class:icon-right={iconRight}
         style:width
-        style:justify-items={align}
+        style:justify-content={align}
         {...props}
     >
         {@render children()}
@@ -58,7 +58,7 @@
         class:icon-left={iconLeft}
         class:icon-right={iconRight}
         style:width
-        style:justify-items={align}
+        style:justify-content={align}
         {...props}
     >
         {@render children()}

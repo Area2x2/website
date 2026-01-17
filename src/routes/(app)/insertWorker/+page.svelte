@@ -14,30 +14,11 @@
         name="email"
         label="Correo electrónico"
         placeholder="Correo electrónico"
-        width="100%"
     />
-    <Input
-        type="text"
-        name="name"
-        label="Nombre"
-        placeholder="Nombre"
-        width="100%"
-    />
-    <Input
-        type="text"
-        name="nickname"
-        label="Apodo"
-        placeholder="Apodo"
-        width="100%"
-    />
-    <Input type="text" name="role" label="Rol" placeholder="Rol" width="100%" />
-    <Input
-        type="password"
-        name="code"
-        label="Código"
-        placeholder="Código"
-        width="100%"
-    />
+    <Input type="text" name="name" label="Nombre" placeholder="Nombre" />
+    <Input type="text" name="nickname" label="Apodo" placeholder="Apodo" />
+    <Input type="text" name="role" label="Rol" placeholder="Rol" />
+    <Input type="password" name="code" label="Código" placeholder="Código" />
     <Button>Insertar</Button>
 </form>
 <p style="color: red">{form?.message ?? ""}</p>

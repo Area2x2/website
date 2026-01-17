@@ -20,14 +20,11 @@
     let addWorkersModalState = new ModalState();
 </script>
 
-<div class="row">
-    <h3>Workers</h3>
-
-    <Tag>{data.workers.length}</Tag>
-</div>
-
 <div class="actions row">
-    <Searchbox bind:value={tableState.search} placeholder="Search" />
+    <div class="row">
+        <Searchbox bind:value={tableState.search} placeholder="Search" />
+        <p>Workers: {data.workers.length}</p>
+    </div>
     <Button onclick={(e) => addWorkersModalState.ontrigger(e)} iconLeft>
         <Icon icon={IconType.Plus} />
         Add Worker
@@ -35,7 +32,7 @@
 </div>
 
 <Modal state={addWorkersModalState}>
-    <div class="column" style="gap: 2rem">
+    <div class="column">
         <div class="row" style="justify-content: space-between;">
             <h5>Add Worker</h5>
             <Button
@@ -48,7 +45,7 @@
             </Button>
         </div>
         <form class="column" method="POST" action="?/insertWorker" use:enhance>
-            <div class="column" style="gap: 0.5rem">
+            <div class="column">
                 <Input
                     type="email"
                     name="email"
@@ -78,7 +75,10 @@
             {#if form && form.message && form.message !== ""}
                 <p style="color: red">{form.message ?? ""}</p>
             {/if}
-            <Button>Insertar</Button>
+            <Button align="center">
+                <Icon icon={IconType.Plus} />
+                Insertar
+            </Button>
         </form>
     </div>
 </Modal>
